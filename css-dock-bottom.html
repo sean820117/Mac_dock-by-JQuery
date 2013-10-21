@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>CSS Mac Dock</title>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/interface.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<!--[if lt IE 7]>
+ <style type="text/css">
+ .dock img { behavior: url(iepngfix.htc) }
+ </style>
+<![endif]-->
+
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="test" style="text-align:center;">
+		<div id="position_of_mouse"></div>
+	</div>
+
+<!--bottom dock -->
+<div class="dock-container">
+  
+  <a class="dock-item" href="#"><span>Home</span><img src="images/home.png" alt="home" /></a> 
+  <a class="dock-item" href="#"><span>Contact</span><img src="images/images.jpg" alt="contact" /></a> 
+  <a class="dock-item" href="#"><span>Portfolio</span><img src="images/portfolio.png" alt="portfolio" /></a> 
+  <a class="dock-item" href="#"><span>Music</span><img src="images/music.png" alt="music" /></a> 
+  <a class="dock-item" href="#"><span>Video</span><img src="images/video.png" alt="video" /></a>
+  <a class="dock-item" href="#"><span>History</span><img src="images/history.png" alt="history" /></a> 
+  <a class="dock-item" href="#"><span>Calendar</span><img src="images/calendar.png" alt="calendar" /></a> 
+  <a class="dock-item" href="#"><span>links</span><img src="images/link.png" alt="links" /></a> 
+  <span class="hide_dock dock-item" href="#"><span>links</span><img src="images/link.png" alt="links" /></span> 
+ 	
+</div>
+
+<!--dock menu JS options -->
+<script type="text/javascript">
+	
+	/*$(document).ready(
+		function()
+		{
+			$('#dock2').Fisheye(
+				{
+					maxWidth: 80,
+					items: 'a',
+					itemsText: 'span',
+					container: '.dock-container',
+					itemWidth: 40,
+					proximity: 80,
+					adivgnment : 'left',
+					vadivgn: 'bottom',
+					hadivgn : 'center'
+				}
+			)
+		}
+	);*/
+	$(document).ready(
+		function(){
+			
+		}
+	);
+	var glassWidth=40;
+	parent1=$("a:first");
+	prev2=parent1.prev().prev().find(" a ");
+	prev1=parent1.prev().find(" a ");
+	next1=parent1.next().find(" a ");
+	next2=parent1.next().next().find(" a ");
+
+	$('a.dock-item').mouseover(function (e) {
+		parent1=$(this);
+		prev1=parent1.prev();
+		prev2=prev1.prev();
+		next1=parent1.next();
+		next2=next1.next();
+
+		if (next1.hasClass("hide_dock")) 
+			next1=$();
+		if (next2.hasClass("hide_dock")) 
+			next2=$();		
+	});
+	$('a.dock-item').mousemove(function (e) {
+		curX = e.pageX + document.documentElement.scrollTop;
+		curY = e.pageY + document.documentElement.scrollLeft;
+		offsetX = $(this).offset().left;
+		offsetY = $(this).offset().top;
+		enlargeRate = curX-offsetX;
+		smoothEnlarge = curY-offsetY;
+		
+		if(smoothEnlarge > 20)
+			smoothEnlarge=20;
+
+		$(this).width(smoothEnlarge/20*40+40);
+		prev2.width((80-enlargeRate)*0.375*(smoothEnlarge/20)+40);
+		prev1.width((80-enlargeRate)*0.125*(smoothEnlarge/20)+40+(smoothEnlarge/20)*30);
+		next1.width(enlargeRate*(smoothEnlarge/20)*0.125+40+(smoothEnlarge/20)*30);
+		next2.width(enlargeRate*(smoothEnlarge/20)*0.375+40);
+		$("#position_of_mouse").text(curX+","+curY+"--"+smoothEnlarge);
+	});
+
+	$('div.dock-container').mouseleave(function(e){
+		$('a.dock-item').animate({width: glassWidth},100);	
+	})
+</script>
+</body>
+</html>

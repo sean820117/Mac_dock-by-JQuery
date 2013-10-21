@@ -1,0 +1,46 @@
+body {
+	background: #ffffff url(images/main-bg.gif);
+	padding: 0;
+	margin: 0;
+}
+img {
+	border: none;
+}
+
+
+
+/* mac_dock - bottom */
+.dock_container {
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	text-align: center;
+	height: 100px;
+}
+.dock_item {
+	display: inline-block;
+	font: bold 18px Arial, Helvetica, sans-serif;
+	position: relative;
+	text-decoration: none;
+	text-align: center;
+	/*left: 83px;*/
+	width: 40px;
+	max-width: 80px;
+	bottom: 0px;
+}
+.dock_item:hover > span{
+	visibility: visible;
+}
+.dock_item span {
+	visibility: hidden;
+}
+
+.dock_item img {
+	border: none; 
+	width: 100%; 
+	bottom: 0px;
+}
+.hide_dock {
+	width: 80px;
+	visibility: hidden;
+}
