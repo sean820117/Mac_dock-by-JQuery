@@ -6,12 +6,13 @@
 **/
 $(document).ready(
 	function(){
-		var glassWidth=40;
 		parent1=$("a:first");
 		prev2=parent1.prev().prev().find(" a ");
 		prev1=parent1.prev().find(" a ");
 		next1=parent1.next().find(" a ");
 		next2=parent1.next().next().find(" a ");
+		var originSize=parent1.width();
+		var goalSize=80;
 
 		$('a.dock_item').mouseover(function (e) {
 			parent1=$(this);
@@ -32,20 +33,28 @@ $(document).ready(
 			offsetY = $(this).offset().top;
 			enlargeRate = curX-offsetX;
 			smoothEnlarge = curY-offsetY;
-			
-			if(smoothEnlarge > 20)
-				smoothEnlarge=20;
+			var smoothRate;
 
-			$(this).width(smoothEnlarge/20*40+40);
-			prev2.width((80-enlargeRate)*0.375*(smoothEnlarge/20)+40);
-			prev1.width((80-enlargeRate)*0.125*(smoothEnlarge/20)+40+(smoothEnlarge/20)*30);
-			next1.width(enlargeRate*(smoothEnlarge/20)*0.125+40+(smoothEnlarge/20)*30);
-			next2.width(enlargeRate*(smoothEnlarge/20)*0.375+40);
-			$("#position_of_mouse").text(curX+","+curY+"--"+smoothEnlarge);
+			if(smoothEnlarge > 20) {
+				smoothRate = 1;
+			} else {
+				smoothRate = smoothEnlarge/20;				
+			}
+
+			$(this).width(smoothRate*(goalSize - originSize)+originSize);
+						
+			if (enlargeRate > goalSize) {
+				enlargeRate = goalSize;
+			};
+			
+			prev2.width((goalSize-enlargeRate)*0.375*smoothRate+originSize);
+			prev1.width((goalSize-enlargeRate)*0.125*smoothRate+originSize+smoothRate*goalSize*0.375);
+			next1.width(enlargeRate*smoothRate*0.125+originSize+smoothRate*goalSize*0.375);
+			next2.width(enlargeRate*smoothRate*0.375+originSize);
 		});
 
 		$('div.dock_container').mouseleave(function(e){
-			$('a.dock_item').animate({width: glassWidth},100);	
+			$('a.dock_item').animate({width: originSize},100);	
 		});		
 	});
 	

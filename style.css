@@ -1,5 +1,4 @@
 body {
-	background: #ffffff url(images/main-bg.gif);
 	padding: 0;
 	margin: 0;
 }
@@ -23,9 +22,7 @@ img {
 	position: relative;
 	text-decoration: none;
 	text-align: center;
-	/*left: 83px;*/
 	width: 40px;
-	max-width: 80px;
 	bottom: 0px;
 }
 .dock_item:hover > span{
